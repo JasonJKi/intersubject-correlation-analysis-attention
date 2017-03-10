@@ -1,0 +1,27 @@
+% Get All Covariance.
+clear all;
+homeDir = /home/jason/Repository/AttentionModulation/;
+run([homeDir 'eegInfo.m'])
+nModule = [1 2];
+
+processIndx = 3 % choose manual or automatic
+processType = eeginfo.preprocess{processIndx}
+saveDir = 'Data/EEG/Processed/OrderReversed'
+saveDir = [homeDir saveDir];
+outFile =  [processType(1:end-1) '_allCov_OrderReversed.mat'];
+
+
+for iStim = 1:nStim;
+    stim = module.eegStimName{iModule}{iStim}
+    eeginDir = [homeDir eeginfo.eegProcDir processType moduletype '/' stim '.mat'];
+    load(eeginDir)
+    eeg(:,:,module.subjRmv{iModule})=[];
+    if i == 1; eeg(:,:,end) =[];end
+    [Rxy_all Rpool_all Rxy Rpool] = generate_cov(eeg,1);
+    R.xy_all{i} = Rxy_all;
+    R.pool_all{i} = Rpool_all;
+    R.xy{i} = Rxy;
+    R.pool{i} = Rpool;
+    i = i+1
+end
+
